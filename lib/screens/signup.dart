@@ -60,7 +60,7 @@ class SignupScreenState extends State<SignupScreen> {
               child: AlertDialog(
                 title: const Text("Sign Up Successful!"),
                 content: const Text(
-                    "Account Created\nPlease check your E-Mail for a verification link.\nIf it is not present there please check your spam folder.\nPlease verify your email and then login."),
+                    "Account Created\nPlease login successfully."),
                 actions: [
                   TextButton(
                     onPressed: () {
@@ -95,24 +95,12 @@ class SignupScreenState extends State<SignupScreen> {
     return Scaffold(
       body: SafeArea(
           child: Container(
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/loginbg.jpg'),
-                  fit: BoxFit.cover,
-                )),
             padding: const EdgeInsets.symmetric(horizontal: 32),
             width: double.infinity,
             child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-              Flexible(
-                  flex: 4,
-                  child: Image.asset(
-                    'assets/logo_png.png',
-                    height: 1000,
-                  )),
               const SizedBox(
                 height: 30,
               ),
-
               // Image.asset('assets/logo_png.png'),
               TextFieldInput(
                   textEditingController: usernameController,
@@ -197,6 +185,7 @@ class SignupScreenState extends State<SignupScreen> {
   Future<bool> checkUserDetails() async {
     usernameController.text = usernameController.text.trim();
     emailController.text = emailController.text.trim();
+    print("Helllll");
     final QuerySnapshot result = await FirebaseFirestore.instance
         .collection('users')
         .where('username', isEqualTo: usernameController.text)
