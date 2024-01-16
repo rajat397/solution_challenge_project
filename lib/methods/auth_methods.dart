@@ -21,11 +21,11 @@ class AuthMethods {
     required String username,
     required String email,
     required String password,
-    String profilepic ="",
-    // "https://firebasestorage.googleapis.com/v0/b/uniconnect-62628.appspot.com/o/default_prof.jpg?alt=media&token=2488a918-e680-4445-a04b-5627c62dcf46",
-    String bio = "Hello",
-    String phone = "Not yet registered",
-    // required Uint8List file,
+    // String profilepic ="",
+    // // "https://firebasestorage.googleapis.com/v0/b/uniconnect-62628.appspot.com/o/default_prof.jpg?alt=media&token=2488a918-e680-4445-a04b-5627c62dcf46",
+    // String bio = "Hello",
+    // String phone = "Not yet registered",
+    // // required Uint8List file,
   }) async {
     String res = "Some error occurred";
 
@@ -42,6 +42,7 @@ class AuthMethods {
         }
 
         //register user
+        print("Helllo");
         UserCredential cred = await auth.createUserWithEmailAndPassword(
             email: email, password: password);
 
@@ -50,14 +51,14 @@ class AuthMethods {
           uid: cred.user!.uid,
           email: email,
           password: password,
-          profilepic: profilepic,
-          phone: phone,
-          bio: bio,
+          // profilepic: profilepic,
+          // phone: phone,
+          // bio: bio,
 
         );
 
         // Send verification email
-        await cred.user!.sendEmailVerification();
+        // await cred.user!.sendEmailVerification();
 
         //add user to our database
         await firestore.collection('users').doc(cred.user!.uid).set(
@@ -83,12 +84,8 @@ class AuthMethods {
         UserCredential cred = await auth.signInWithEmailAndPassword(
             email: email, password: password);
 
-        if (cred.user!.emailVerified) {
+        // if (cred.user!.emailVerified) {
           res = "Success";
-        } else {
-          await auth.signOut(); // Sign out the user
-          res = "Please verify your email before logging in.";
-        }
       } else {
         res = "Please enter all the fields";
       }
